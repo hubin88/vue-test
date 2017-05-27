@@ -1,0 +1,49 @@
+{
+  "status": 1,
+  "result": {
+    "totalMoney":59,
+    "list":[
+      {
+        "addressId":"100001",
+        "userName":"hubin",
+        "streeName":"车公庙",
+        "postCode":"100001",
+        "tel":"13800000000",
+        "isDefault":true
+      },
+      {
+        "addressId":"100002",
+        "userName":"hubin",
+        "streeName":"车公庙",
+        "postCode":"100001",
+        "tel":"13800000000",
+        "isDefault":false
+      },
+      {
+        "addressId":"100003",
+        "userName":"hubin",
+        "streeName":"车公庙",
+        "postCode":"100001",
+        "tel":"13800000000",
+        "isDefault":false
+      },
+      {
+        "addressId":"100004",
+        "userName":"hubin",
+        "streeName":"车公庙",
+        "postCode":"100001",
+        "tel":"13800000000",
+        "isDefault":false
+      },
+      {
+        "addressId":"100005",
+        "userName":"hubin",
+        "streeName":"车公庙",
+        "postCode":"100001",
+        "tel":"13800000000",
+        "isDefault":false
+      }
+    ]
+  },
+  "message":"请求出错"
+}

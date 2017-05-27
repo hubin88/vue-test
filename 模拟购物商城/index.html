@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <style>
+        html, body {
+            margin: 0;
+            pading: 0;
+            user-select: none;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            border-bottom: 1px solid gray;
+            padding: 20px 0;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .title {
+            display: table;
+            width: 100%;
+            padding: 10px 0;
+            background: gray;
+            table-layout: fixed;
+        }
+
+        .title > span {
+            display: table-cell;
+            text-align: center;
+        }
+
+        .title > span:first-child {
+            width: 50%;
+        }
+
+        .content > ul > li {
+            width: 100%;
+            display: table;
+            table-layout: fixed;
+        }
+
+        .content > ul > li > div {
+            display: table-cell;
+            text-align: center;
+        }
+
+        .content > ul > li > div:first-child {
+            width: 50%;
+        }
+
+        .quantity > * {
+            display: inline-block;
+        }
+
+        .quantity > span {
+            width: 20px;
+            line-height: 23px;
+        }
+
+        .logo {
+            display: table;
+            text-align: left !important;
+        }
+
+        .logo > * {
+            display: table-cell;
+        }
+
+        .check {
+            width: 40px;
+            margin-right: 20px;
+        }
+
+        .ckeckbox {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+        }
+
+        a.checked {
+            background: red;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        .table > li {
+            display: inline-block;
+            border: 1px solid black;
+            width: 33%;
+        }
+
+        .yellow {
+            color: orange;
+        }
+
+        li.checked {
+            border-color: orange;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+    <h2>购物车</h2>
+    <div class="title">
+        <span>商品信息</span>
+        <span>商品金额</span>
+        <span>商品数量</span>
+        <span>总金额</span>
+        <span>编辑</span>
+    </div>
+    <div class="content">
+        <ul>
+            <li v-for="(item,index) in productList">
+                <div class="logo">
+                    <div class="check">
+                        <a href="javascript:;" class="ckeckbox"
+                           v-bind:class="{'checked':item.checked}"
+                           @click="selectProduct(item)"></a>
+                    </div>
+                    <div class="detailed">
+                        <img v-bind:src="item.productImage">
+                        <span class="name">{{item.productName}}</span>
+                        <span class="give">
+                            <dl>
+                                <dt>赠送：</dt>
+                                <dd v-for="part in item.parts" v-text="part.partsName"></dd>
+                            </dl>
+                        </span>
+                    </div>
+                </div>
+                <div class="money">{{item.productPrice|formatMoney}}</div>
+                <div class="quantity">
+                    <span v-on:click="changeQuentity(item,-1)"> - </span>
+                    <input type="text" value="0" size="1" disabled v-model="item.productQuentity">
+                    <span @click="changeQuentity(item,1)"> + </span>
+                </div>
+                <div class="amount">{{item.productPrice*item.productQuentity|money("元")}}</div>
+                <div class="delete">
+                    <span @click="deleteItem(index)">删除</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="options">
+        <a href="javascript:;" class="ckeckbox" id="chose-all" :class="{'checked':checkAllFlag}"
+           @click="checkAll(true)"></a>
+        <label for="chose-all">全选</label>
+        <span class="cancel" @click="checkAll(false)">取消全选</span>
+        <span class="total">合计:{{totalMoney|money("元")}}</span>
+        <span class="checkout">结账</span>
+    </div>
+    <h5>地址列表</h5>
+    <ul class="table">
+        <li v-for="(address,index) in filterAddress" :class="{checked:index==curIndex}"
+            @click="curIndex=index">
+            <div>{{address.userName}}</div>
+            <div>{{address.streeName}}</div>
+            <div>{{address.tel}}</div>
+            <div v-if="address.isDefault" :class="{'yellow':address.isDefault}">默认地址</div>
+            <div v-else><span @click="setDefault(address.addressId)">设为默认</span></div>
+        </li>
+    </ul>
+    <span @click="limitNum=addressList.length">更多</span>
+</div>
+</body>
+<script src="js/vue.min.js"></script>
+<script src="js/vue-resource.min.js"></script>
+<script src="js/cart.js"></script>
+</html>
